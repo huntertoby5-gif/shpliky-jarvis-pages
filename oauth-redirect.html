@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>JARVIS TikTok auth</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body { font-family: -apple-system, Segoe UI, Arial, sans-serif; max-width: 480px; margin: 6rem auto; padding: 0 1.5rem; color: #222; text-align: center; }
+  code { background: #f2f2f2; padding: 0.2rem 0.4rem; border-radius: 4px; word-break: break-all; }
+</style>
+</head>
+<body>
+  <h2 id="msg">Connecting to JARVIS on this device...</h2>
+  <p id="fallback" style="display:none">
+    Couldn't reach JARVIS automatically. Copy this code back to it: <br><code id="code"></code>
+  </p>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const target = "http://localhost:8765/callback" + window.location.search;
+    document.getElementById("code").textContent = params.get("code") || "(no code found)";
+    // Show the fallback code after a short delay in case the local redirect
+    // doesn't complete (e.g. JARVIS isn't running to receive it).
+    setTimeout(() => {
+      document.getElementById("msg").textContent = "Almost done.";
+      document.getElementById("fallback").style.display = "block";
+    }, 2000);
+    window.location.href = target;
+  </script>
+</body>
+</html>
